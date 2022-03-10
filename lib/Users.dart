@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'Classes.dart';
@@ -14,7 +13,7 @@ class _UsersScreenState extends State<UsersScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: menu(context),
+      endDrawer: menu(context),
       appBar: AppBar(
         title: const Text("Пользователи"),
       ),
@@ -116,10 +115,10 @@ class _UserScreenState extends State<UserScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: menu(context),
+      endDrawer: menu(context),
       appBar: AppBar(
         title: Text("${widget.user.name} (${widget.user.username})"),
-      ),
+       ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -229,6 +228,7 @@ class _UserTodosWidgetState extends State<UserTodosWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      endDrawer: menu(context),
       appBar: AppBar(
         title: const Text("Задания"),
       ),
@@ -318,9 +318,7 @@ class _TodoListItemState extends State<TodoListItem> {
 
 Widget menu(context) => Drawer(
         shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              topRight: Radius.circular(20),
-              bottomRight: Radius.circular(20)),
+          borderRadius: BorderRadius.all(Radius.circular(20)),
         ),
       child: ListView(
           padding: EdgeInsets.zero,
