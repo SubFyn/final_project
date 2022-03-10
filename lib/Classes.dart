@@ -1,5 +1,6 @@
-import 'dart:convert';
+import 'dart:async';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class User {
   final int id;
@@ -35,14 +36,15 @@ class User {
     );
   }
 }
-Future<List<User>> fetchUsers() async {
-  final response = await http.get(Uri.parse('https://jsonplaceholder.typicode.com/users'));
 
+Future<List<User>> fetchUsers() async {
+  final response =
+  await http.get(Uri.parse('https://jsonplaceholder.typicode.com/users'));
   if (response.statusCode == 200) {
     List jsonResponse = json.decode(response.body);
     return jsonResponse.map((user) => User.fromJson(user)).toList();
   } else {
-    throw Exception('Не удалось загрузить пользователей из API');
+    throw Exception('Не удалось получить список пользователей!');
   }
 }
 class Address {
@@ -105,3 +107,40 @@ class Company {
     );
   }
 }
+
+class Todo {
+  final int userId;
+  final int id;
+  final String title;
+  bool completed;
+
+  Todo({
+    required this.userId,
+    required this.id,
+    required this.title,
+    required this.completed
+  });
+  factory Todo.fromJson(Map<String, dynamic> json) {
+    return Todo(
+      userId: json['userId'] as int,
+      id: json['id'] as int,
+      title: json['title'] as String,
+      completed: json['completed'] as bool,
+    );
+  }
+}
+const todoAddress =
+    'https://jsonplaceholder.typicode.com/todos?userId='; //константа адреса без Айди
+Future<List<Todo>> fetchTasksByUserId(int userId) async {
+  final response = await http.get(
+      Uri.parse(todoAddress+'$userId'));
+
+  if (response.statusCode == 200) {
+    List jsonResponse = json.decode(response.body);
+    return jsonResponse.map((todo) => Todo.fromJson(todo)).toList();
+  } else {
+    throw Exception('Не удалось получить информацию о пользователе!');
+  }
+}
+
+
