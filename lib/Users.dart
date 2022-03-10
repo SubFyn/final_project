@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'Classes.dart';
@@ -115,6 +116,7 @@ class _UserScreenState extends State<UserScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: menu(context),
       appBar: AppBar(
         title: Text("${widget.user.name} (${widget.user.username})"),
       ),
